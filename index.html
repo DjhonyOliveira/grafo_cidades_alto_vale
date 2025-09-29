@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Exemplo Visual de Grafos — Cidades</title>
+	<link rel="stylesheet" href="shared/styles/style.css">  
+</head>
+<body>
+	<div class="calcular">
+		<h2>Selecione as cidades</h2>
+		<form id="rotaForm">
+			<select id="origem" name="cidade_origem">
+				<option value="1">Agrolândia</option>
+				<option value="2">Agronômica</option>
+				<option value="3">Atalanta</option>
+				<option value="4">Aurora</option>
+				<option value="5">Braço do Trombudo</option>
+				<option value="6">Chapadão do Lageado</option>
+				<option value="7">Dona Emma</option>
+				<option value="8">Ibirama</option>
+				<option value="9">Imbuia</option>
+				<option value="10">Ituporanga</option>
+				<option value="11">José Boiteux</option>
+				<option value="12">Laurentino</option>
+				<option value="13">Lontras</option>
+				<option value="14">Mirim Doce</option>
+				<option value="15">Petrolândia</option>
+				<option value="16">Pouso Redondo</option>
+				<option value="17">Presidente Getúlio</option>
+				<option value="18">Presidente Nereu</option>
+				<option value="19">Rio do Campo</option>
+				<option value="20">Rio do Oeste</option>
+				<option value="21">Rio do Sul</option>
+				<option value="22">Salete</option>
+				<option value="23">Santa Terezinha</option>
+				<option value="24">Taió</option>
+				<option value="25">Trombudo Central</option>
+				<option value="26">Vidal Ramos</option>
+				<option value="27">Vitor Meireles</option>
+				<option value="28">Witmarsum</option>
+			</select>
+
+			<select id="destino" name="cidade_destino">
+				<option value="1">Agrolândia</option>
+				<option value="2">Agronômica</option>
+				<option value="3">Atalanta</option>
+				<option value="4">Aurora</option>
+				<option value="5">Braço do Trombudo</option>
+				<option value="6">Chapadão do Lageado</option>
+				<option value="7">Dona Emma</option>
+				<option value="8">Ibirama</option>
+				<option value="9">Imbuia</option>
+				<option value="10">Ituporanga</option>
+				<option value="11">José Boiteux</option>
+				<option value="12">Laurentino</option>
+				<option value="13">Lontras</option>
+				<option value="14">Mirim Doce</option>
+				<option value="15">Petrolândia</option>
+				<option value="16">Pouso Redondo</option>
+				<option value="17">Presidente Getúlio</option>
+				<option value="18">Presidente Nereu</option>
+				<option value="19">Rio do Campo</option>
+				<option value="20">Rio do Oeste</option>
+				<option value="21">Rio do Sul</option>
+				<option value="22">Salete</option>
+				<option value="23">Santa Terezinha</option>
+				<option value="24">Taió</option>
+				<option value="25">Trombudo Central</option>
+				<option value="26">Vidal Ramos</option>
+				<option value="27">Vitor Meireles</option>
+				<option value="28">Witmarsum</option>
+			</select>
+
+			<button type="submit">Calcular</button>
+		</form>
+	</div>
+
+	<div id="network"></div>
+
+	<div class="controls">
+		<button id="fitBtn">Ajustar à tela</button>
+		<button id="exportBtn">Exportar PNG</button>
+	</div>
+	<script type="text/javascript" src="https://unpkg.com/vis-network@9.1.2/standalone/umd/vis-network.min.js"></script>
+	<script type="module" src="shared/scripts/app.js" ></script>
+</body>
+</html>
