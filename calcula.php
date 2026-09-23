@@ -6,8 +6,8 @@ function dijkstra($graph, $start, $end) {
     $queue = [];
 
     foreach ($graph as $vertex => $edges) {
-        $dist[$vertex]  = 0;
-        $queue[$vertex] = 0;
+        $dist[$vertex]  = INF;
+        $queue[$vertex] = INF;
         $prev[$vertex]  = null;
     }
 
