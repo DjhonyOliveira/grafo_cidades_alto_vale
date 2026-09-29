@@ -1,18 +1,21 @@
 import { options } from './options.js';
+import { montarGrafo, calcularMenorCaminho } from './dijkstra.js';
 
-let network, nodes, edges;
+let network, nodes, edges, grafo;
 
 async function initGraph() {
-    const response = await fetch("cidades.json");
-    const data = await response.json();
+    const response = await fetch("aeroportos.json");
+    const dadosDoGrafo = await response.json();
 
-    nodes = new vis.DataSet(data.nodes);
-    edges = new vis.DataSet(data.edges.map(edge => ({
+    grafo = montarGrafo(dadosDoGrafo.edges);
+
+    nodes = new vis.DataSet(dadosDoGrafo.nodes);
+    edges = new vis.DataSet(dadosDoGrafo.edges.map(edge => ({
         id: `${edge.from}-${edge.to}`,
         from: edge.from,
         to: edge.to,
         label: edge.label,
-        length: edge.distance
+        length: edge.length
     })));
 
     const container = document.getElementById("network");
@@ -57,30 +60,24 @@ function bindEvents() {
         nodes.update({ id: selected, color:{ background:'#8ecae6' } });
     });
 
-    document.getElementById("rotaForm").addEventListener("submit", async function(e) {
+    document.getElementById("rotaForm").addEventListener("submit", function(e) {
         e.preventDefault();
 
-        const origem  = document.getElementById("origem").value;
-        const destino = document.getElementById("destino").value;
+        const idOrigem  = document.getElementById("origem").value;
+        const idDestino = document.getElementById("destino").value;
 
-        const response = await fetch("calcula.php", {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: `cidade_origem=${origem}&cidade_destino=${destino}`
-        });
-
-        const result = await response.json();
-        console.log(result);
+        const rotaCalculada = calcularMenorCaminho(grafo, idOrigem, idDestino);
+        console.log(rotaCalculada);
 
         edges.forEach(edge => {
             edges.update({ id: edge.id, color: { color: "black" }, width: 1 });
         });
 
-        for (let i = 0; i < result.path.length - 1; i++) {
-            const from = result.path[i];
-            const to   = result.path[i+1];
-            const edgeId1 = `${from}-${to}`;
-            const edgeId2 = `${to}-${from}`;
+        for (let i = 0; i < rotaCalculada.caminho.length - 1; i++) {
+            const idAeroportoAtual   = rotaCalculada.caminho[i];
+            const idProximoAeroporto = rotaCalculada.caminho[i + 1];
+            const edgeId1 = `${idAeroportoAtual}-${idProximoAeroporto}`;
+            const edgeId2 = `${idProximoAeroporto}-${idAeroportoAtual}`;
 
             if (edges.get(edgeId1)) {
                 edges.update({ id: edgeId1, color: { color: "red" }, width: 3 });

@@ -1,13 +1,14 @@
 export const options = {
     nodes: {
-        shape: 'dot',
-        scaling: { 
-            min: 6, 
-            max: 40     
+        shape: 'circle',
+        widthConstraint: {
+            minimum: 90,
+            maximum: 110
         },
-        font: { 
-            size: 14, 
-            face: 'Inter' 
+        font: {
+            size: 13,
+            face: 'Inter',
+            color: '#ffffff'
         }
     },
     edges: {
@@ -21,18 +22,29 @@ export const options = {
         }
     },
     groups: {
-        pequena: { 
-            color: { 
-                background: '#90be6d' 
-            }, 
-            size: 12 
+        nordeste: {
+            color: { background: '#c0392b', border: '#7b241c' }
+        },
+        norte: {
+            color: { background: '#27ae60', border: '#186a3b' }
+        },
+        centroOeste: {
+            color: { background: '#f1c40f', border: '#9a7d0a' },
+            font: { color: '#3a2f00' }
+        },
+        sudeste: {
+            color: { background: '#a0522d', border: '#6e3a1e' }
+        },
+        sul: {
+            color: { background: '#2b2bcf', border: '#1a1a8c' }
         }
     },
     physics: {
         stabilization: true,
-        barnesHut: { 
-            gravitationalConstant: -3000, 
-            springLength: 200 
+        barnesHut: {
+            gravitationalConstant: -6000,
+            springLength: 260,
+            avoidOverlap: 1
         }
     },
     interaction: {
