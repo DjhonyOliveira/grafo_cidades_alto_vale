@@ -2,8 +2,12 @@ export const options = {
     nodes: {
         shape: 'circle',
         widthConstraint: {
-            minimum: 90,
-            maximum: 110
+            minimum: 100,
+            maximum: 100
+        },
+        heightConstraint: {
+            minimum: 100,
+            valign: 'middle'
         },
         font: {
             size: 13,

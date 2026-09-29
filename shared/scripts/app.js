@@ -2,6 +2,7 @@ import { options } from './options.js';
 import { montarGrafo, calcularMenorCaminho } from './dijkstra.js';
 
 let network, nodes, edges, grafo;
+let noSelecionado = null;
 
 async function initGraph() {
     const response = await fetch("aeroportos.json");
@@ -45,19 +46,30 @@ function bindEvents() {
         network.body.container.style.cursor = 'default'; 
     });
 
-    network.on('selectNode', function(params) {
-        const selected  = params.nodes[0];
-        const connected = network.getConnectedNodes(selected);
+    network.on('click', function(params) {
+        const clicado = params.nodes[0];
 
-        nodes.forEach(node => { 
-            nodes.update({ id: node.id, color: undefined }); 
+        if (clicado === undefined || clicado === noSelecionado) {
+            nodes.forEach(node => {
+                nodes.update({ id: node.id, color: undefined });
+            });
+            network.unselectAll();
+            noSelecionado = null;
+            return;
+        }
+
+        const connected = network.getConnectedNodes(clicado);
+
+        nodes.forEach(node => {
+            nodes.update({ id: node.id, color: undefined });
         });
 
-        connected.forEach(id => { 
-            nodes.update({ id: id, color: { background:'#cfe9ff' } }); 
+        connected.forEach(id => {
+            nodes.update({ id: id, color: { background:'#cfe9ff' } });
         });
 
-        nodes.update({ id: selected, color:{ background:'#8ecae6' } });
+        nodes.update({ id: clicado, color:{ background:'#8ecae6' } });
+        noSelecionado = clicado;
     });
 
     document.getElementById("rotaForm").addEventListener("submit", function(e) {
@@ -67,6 +79,7 @@ function bindEvents() {
         const idDestino = document.getElementById("destino").value;
 
         const rotaCalculada = calcularMenorCaminho(grafo, idOrigem, idDestino);
+        mostraDistanciaTotalCalculada(rotaCalculada);
         console.log(rotaCalculada);
 
         edges.forEach(edge => {
@@ -86,6 +99,21 @@ function bindEvents() {
             }
         }
     });
+}
+
+function mostraDistanciaTotalCalculada(distancia){
+    let paragrafoJaExiste = document.querySelector('#distancia p');
+
+    if(paragrafoJaExiste){
+        paragrafoJaExiste.remove();
+    }
+
+    let p    = document.createElement('p');
+    let span = document.getElementById('distancia');
+
+    p.textContent = `distância: ${distancia.distancia} Km`;
+
+    span.append(p);
 }
 
 initGraph();
